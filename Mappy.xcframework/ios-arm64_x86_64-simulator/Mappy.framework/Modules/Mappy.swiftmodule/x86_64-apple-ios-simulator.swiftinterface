@@ -1,0 +1,137 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.6.1 (swiftlang-5.6.0.323.66 clang-1316.0.20.12)
+// swift-module-flags: -target x86_64-apple-ios13.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name Mappy
+import ArcGIS
+import CocoaLumberjack
+import Combine
+import Foundation
+import KeychainAccess
+@_exported import Mappy
+import Swift
+import Swinject
+import UIKit
+import ZIPFoundation
+import _Concurrency
+public enum MapsProviderError : Foundation.LocalizedError {
+  case objectNotFound
+  case mapNotFound
+  case underlyingError(Swift.Error)
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) final public class MapView : UIKit.UIView {
+  @_Concurrency.MainActor(unsafe) final public var map: Mappy.Map? {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+public enum ResortsProviderError : Foundation.LocalizedError {
+  case objectNotFound
+  case resortsNotFound
+  case resortNotFound
+  case underlyingError(Swift.Error)
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
+final public class Scene {
+  public init(sceneInfo: Mappy.Resort)
+  final public func load(completion: @escaping (Swift.Error?) -> Swift.Void)
+  @objc deinit
+}
+public struct Resort {
+  public let resortId: Swift.String?
+  public let data: Mappy.ResortData?
+  public let maps: [Mappy.ResortMap]?
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct ResortData {
+  public let baseElevation: Swift.Int?
+  public let gondolaCount: Swift.Int?
+  public let skiableArea: Swift.Int?
+  public let skiPatrolEmergencyNumber: Swift.String?
+  public let terrainParkCount: Swift.Int?
+  public let verticalElevation: Swift.Int?
+  public let ziplineCount: Swift.Int?
+  public let liftCount: Swift.Int?
+  public let name: Swift.String?
+  public let description: Swift.String?
+  public let geoReference: Mappy.ResortGeoReference?
+  public let terrainPercentage: Mappy.ResortTerrainPercentage?
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct ResortGeoReference {
+  public let minY: Swift.Float?
+  public let minX: Swift.Float?
+  public let maxY: Swift.Float?
+  public let maxX: Swift.Float?
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct ResortTerrainPercentage {
+  public let intermediate: Swift.Float?
+  public let advanced: Swift.Float?
+  public let beginer: Swift.Float?
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct ResortMap {
+  public let mapKey: Swift.String?
+  public let mapType: Mappy.ResortMap.MapType?
+  public enum MapType : Swift.String {
+    case map
+    case scene
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public class ResortsService {
+  public init()
+  public func getResorts() -> Combine.AnyPublisher<[Mappy.Resort], Mappy.ResortsProviderError>
+  public func getResort(resortId: Swift.String) -> Combine.AnyPublisher<Mappy.Resort, Mappy.ResortsProviderError>
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class MappyCore {
+  public static func initialize(clientId: Swift.String, secret: Swift.String, completion: ((Swift.Error?) -> Swift.Void)?)
+  @objc deinit
+}
+final public class Map {
+  public init(mapInfo: Mappy.Resort)
+  final public func load(completion: @escaping (Swift.Error?) -> Swift.Void)
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) final public class SceneView : UIKit.UIView {
+  @_Concurrency.MainActor(unsafe) final public var scene: Mappy.Scene? {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+extension Mappy.Resort : Swift.Encodable {}
+extension Mappy.Resort : Swift.Decodable {}
+extension Mappy.ResortData : Swift.Encodable {}
+extension Mappy.ResortData : Swift.Decodable {}
+extension Mappy.ResortGeoReference : Swift.Encodable {}
+extension Mappy.ResortGeoReference : Swift.Decodable {}
+extension Mappy.ResortTerrainPercentage : Swift.Encodable {}
+extension Mappy.ResortTerrainPercentage : Swift.Decodable {}
+extension Mappy.ResortMap : Swift.Encodable {}
+extension Mappy.ResortMap : Swift.Decodable {}
+extension Mappy.ResortMap.MapType : Swift.Encodable {}
+extension Mappy.ResortMap.MapType : Swift.Decodable {}
+extension Mappy.ResortMap.MapType : Swift.Equatable {}
+extension Mappy.ResortMap.MapType : Swift.Hashable {}
+extension Mappy.ResortMap.MapType : Swift.RawRepresentable {}
